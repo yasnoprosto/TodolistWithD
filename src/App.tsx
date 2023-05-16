@@ -1,16 +1,18 @@
 import React, {useState} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
+import {v1} from 'uuid';
 
 export type buttonNameType = 'all' | 'active' | 'completed'
 
 function App() {
 
     let [tasks, setTask] = useState<Array<TaskType>>([
-        {id: 1, title: 'HTML&CSS', isDone: true},
-        {id: 2, title: 'JS', isDone: true},
-        {id: 3, title: 'ReactJS', isDone: false},
-        {id: 4, title: 'Redux', isDone: false}
+
+        {id: v1(), title: 'HTML&CSS', isDone: true},
+        {id: v1(), title: 'JS', isDone: true},
+        {id: v1(), title: 'ReactJS', isDone: false},
+        {id: v1(), title: 'Redux', isDone: false}
     ]);
     let [filter, setFilter] = useState<buttonNameType>('all');
 
@@ -28,9 +30,15 @@ function App() {
         setFilter(ButtonName);
     }
 
-    function removeTask(id: number) {
+    function removeTask(id: string) {
         setTask(tasks = tasks.filter(el => el.id !== id));
         console.log(tasks);
+    }
+
+    function addTask(title: string) {
+        let newTask = {id: v1(), title: title, isDone: false};
+        let newTasks = [newTask, ...tasks];
+        setTask(newTasks);
     }
 
     return (
@@ -39,6 +47,7 @@ function App() {
                       tasks={filteredTask}
                       removeTask={removeTask}
                       clickFilter={clickFilter}
+                      addTask={addTask}
             />
         </div>
     );

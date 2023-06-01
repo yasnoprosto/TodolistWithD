@@ -1,33 +1,46 @@
 import React, {useState} from 'react';
 import './App.css';
-import {TaskType, Todolist} from './Todolist';
+import {Todolist} from './Todolist';
+import {v1} from 'uuid';
 
-export type FilterValueType = 'all' | 'completed' | 'active'
+export type FilterValuesType = 'all' | 'active' | 'completed';
 
 function App() {
 
-    let [tasks, setTasks] = useState<Array<TaskType>>([
-        {id: 1, title: 'HTML&CSS', isDone: true},
-        {id: 2, title: 'JS', isDone: true},
-        {id: 3, title: 'ReactJS', isDone: false},
-        {id: 4, title: 'Redux', isDone: false}
+    let [tasks, setTasks] = useState([
+        {id: v1(), title: 'HTML&CSS', isDone: true},
+        {id: v1(), title: 'JS', isDone: true},
+        {id: v1(), title: 'ReactJS', isDone: false},
+        {id: v1(), title: 'Rest API', isDone: false},
+        {id: v1(), title: 'GraphQL', isDone: false},
     ]);
-    let [filer, setFilter] = useState<FilterValueType>('all');
 
-    function removeTask(id: number) {
-        setTasks(tasks.filter(el => el.id !== id));
+    function removeTask(id: string) {
+        let filteredTasks = tasks.filter(t => t.id !== id);
+        setTasks(filteredTasks);
     }
 
-    function changeFilter(value: FilterValueType) {
-        setFilter(value);
-    }
+    const addTAsk = (title: string) => {
+        let newTask = {id: v1(), title: title, isDone: false};
+        let newTasks = [newTask, ...tasks];
+        setTasks(newTasks);
+
+    };
+
+    let [filter, setFilter] = useState<FilterValuesType>('all');
 
     let tasksForTodolist = tasks;
-    if (filer === 'completed') {
-        tasksForTodolist = tasks.filter(el => el.isDone);
+
+    if (filter === 'active') {
+        tasksForTodolist = tasks.filter(t => !t.isDone);
     }
-    if (filer === 'active') {
-        tasksForTodolist = tasks.filter(el => !el.isDone);
+    if (filter === 'completed') {
+        tasksForTodolist = tasks.filter(t => t.isDone);
+    }
+
+    function changeFilter(value: FilterValuesType) {
+        setFilter(value);
+
     }
 
     return (
@@ -36,8 +49,7 @@ function App() {
                       tasks={tasksForTodolist}
                       removeTask={removeTask}
                       changeFilter={changeFilter}
-
-            />
+                      addTAsk={addTAsk}/>
         </div>
     );
 }

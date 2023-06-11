@@ -20,12 +20,6 @@ function App() {
         setTasks(filteredTasks);
     }
 
-    const addTask=(title:string)=>{
-        let newTask={ id: v1(), title: title, isDone: false}
-        let newTasks=[newTask,...tasks]
-        setTasks(newTasks)
-    }
-
     let [filter, setFilter] = useState<FilterValuesType>("all");
 
     let tasksForTodolist = tasks;
@@ -40,15 +34,18 @@ function App() {
     function changeFilter(value: FilterValuesType) {
         setFilter(value);
     }
-
+const addTask=(title:string)=>{
+        let newTask= { id: v1(), title: title, isDone: false }
+    setTasks([newTask,...tasks])
+    console.log(tasks)
+}
     return (
         <div className="App">
             <Todolist title="What to learn"
                       tasks={tasksForTodolist}
                       removeTask={removeTask}
                       changeFilter={changeFilter}
-                      addTask={addTask}
-            />
+                      addTask={addTask}/>
         </div>
     );
 }

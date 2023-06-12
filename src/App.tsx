@@ -19,7 +19,6 @@ function App() {
         let filteredTasks = tasks.filter(t => t.id !== id);
         setTasks(filteredTasks);
     }
-    let [filter, setFilter] = useState<FilterValuesType>('all');
 
     function addTask(title: string) {
         let task = {id: v1(), title: title, isDone: false};
@@ -27,6 +26,7 @@ function App() {
         setTasks(newTasks);
     }
 
+    let [filter, setFilter] = useState<FilterValuesType>('all');
 
     let tasksForTodolist = tasks;
 
@@ -42,13 +42,14 @@ function App() {
     }
 
     const changeStatus = (taskId: string, isDone: boolean) => {
-        let task = tasks.find(t => t.id === taskId);
+        let task = tasks.find(el => el.id === taskId);
         if (task) {
             task.isDone = isDone;
         }
-        let copy=[...tasks]
-        setTasks(copy)
+
+        setTasks([...tasks]);
     };
+
 
     return (
         <div className="App">

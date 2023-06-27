@@ -18,15 +18,15 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
         }
     };
     const addTask = () => {
-        if (title.trim() !== '') {
-            props.addItem(title.trim());
+        let newTitle = title.trim();
+        if (newTitle !== '') {
+            props.addItem(newTitle);
             setTitle('');
         } else {
             setError('Title is required');
         }
     };
-
-    return (<div>
+    return <div>
         <input value={title}
                onChange={onChangeHandler}
                onKeyPress={onKeyPressHandler}
@@ -34,5 +34,5 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
         />
         <button onClick={addTask}>+</button>
         {error && <div className="error-message">{error}</div>}
-    </div>);
+    </div>;
 };

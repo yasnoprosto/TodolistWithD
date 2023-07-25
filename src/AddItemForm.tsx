@@ -1,13 +1,14 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {Button, IconButton, TextField} from '@mui/material';
+import {IconButton, TextField} from '@mui/material';
 import {ControlPoint} from '@mui/icons-material';
+import {v1} from "uuid";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
 export const AddItemForm = (props: AddItemFormPropsType) => {
-    let [title, setTitle] = useState('');
-    let [error, setError] = useState<string | null>(null);
+    const [title, setTitle] = useState('');
+    const [error, setError] = useState<string | null>(null);
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value);
@@ -20,7 +21,8 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
         }
     };
     const addTask = () => {
-        let newTitle = title.trim();
+
+        const newTitle = title.trim();
         if (newTitle !== '') {
             props.addItem(newTitle);
             setTitle('');

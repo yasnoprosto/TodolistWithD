@@ -1,7 +1,6 @@
 import React from "react";
 import "./index.css";
 import {createRoot} from "react-dom/client";
-import AppWithReducers from "./AppWithReducers";
 import {Provider} from "react-redux";
 import {store} from "./state/store";
 import AppWithRedux from "./AppWithRedux";

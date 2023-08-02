@@ -45,7 +45,9 @@ export type TasksActionsType =
     | ChangeTaskTitleActionType
     | ChangeTaskStatusActionType | AddTodolistActionType | RemoveAllTasksActionType
 
-const initialState: TasksStateType = {};
+const initialState: TasksStateType = {
+    count: []
+};
 
 export const tasksReducer = (state: TasksStateType = initialState, action: TasksActionsType): TasksStateType => {
 

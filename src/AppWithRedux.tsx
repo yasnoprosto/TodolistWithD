@@ -84,7 +84,6 @@ function AppWithRedux() {
             <Container fixed>
                 <Grid container style={{padding: "20px"}}>
                     <AddItemForm addItem={addTodolist}/>
-                    <Fake/>
                 </Grid>
                 <Grid container spacing={5}>
                     {

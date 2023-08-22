@@ -55,6 +55,15 @@ type CreateTaskResponseType = {
     }
 };
 
+type UpdateTaskResponseType = {
+    title: string
+    description: string
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
+};
+
 
 
 type ResponseType<D = {}> = {
@@ -90,6 +99,6 @@ export const todolistsAPI = {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`);
     },
     updateTaskTitle(todolistId: string, taskId: string, newTitle: string) {
-        return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, {title: newTitle});
+        return instance.put<ResponseType<UpdateTaskResponseType>>(`todo-lists/${todolistId}/tasks/${taskId}`, {title: newTitle});
     }
 };

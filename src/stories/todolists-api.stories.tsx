@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import {todolistsAPI} from "../api/todolists-API";
 
@@ -87,22 +87,31 @@ export const CreateTask = () => {
 
 export const DeleteTask = () => {
     const [state, setState] = useState<any>(null);
-    useEffect(() => {
-        const todolistId = "a1f1d8cd-508a-4cf8-be44-85b9f42cb55f";
-        const taskId = "cea77693-cef2-4e49-95ed-fe3fe8dc4432";
-        todolistsAPI.deleteTask(todolistId, taskId)
-            .then((res) => {
-                setState(res.data);
-            });
-    }, []);
+    const todolistRef = useRef<HTMLInputElement | null>(null);
+    const tasksRef = useRef<HTMLInputElement | null>(null);
 
-    return <div>{JSON.stringify(state)}</div>;
+    const onClickHandler = () => {
+        const todolistId = todolistRef.current?.value;
+        const taskId = tasksRef.current?.value;
+        if (todolistId && taskId) {
+            todolistsAPI.deleteTask(todolistId, taskId)
+                .then((res) => {
+                    setState(res.data);
+                });
+        };
+    }
+
+    return <div>{JSON.stringify(state)}
+        <input placeholder={"todolist ID here"} type="text" ref={todolistRef}/>
+        <input placeholder={"task ID here"} type="text" ref={tasksRef}/>
+        <button onClick={onClickHandler}>DELETE</button>
+    </div>;
 };
 export const UpdateTaskTitle = () => {
     const [state, setState] = useState<any>(null);
     useEffect(() => {
         const todolistId = "a1f1d8cd-508a-4cf8-be44-85b9f42cb55f";
-        const taskId = "60c3cc60-bf76-4009-ab9d-80b92403c6de";
+        const taskId = "91d0c280-d6bd-4251-98a3-77b6f6f131d7";
         const newTitle = "Banana";
         todolistsAPI.updateTaskTitle(todolistId, taskId, newTitle)
             .then((res) => {
